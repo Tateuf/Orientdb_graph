@@ -16,11 +16,14 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class CommandDB {
+    static String databaseName = "" ; //replace by your database name
+    static String user = ""; //replace by your username
+    static String password = ""; //replace by your password
 
     public static String NumberToRID(String number){
 
             OrientDB orient = new OrientDB("remote:localhost", OrientDBConfig.defaultConfig());
-            ODatabaseSession db = orient.open("test", "root", "user");
+            ODatabaseSession db = orient.open(databaseName, user, password);
             try {
                 OResultSet response = db.query(String.format("SELECT * from Product WHERE number = '%s'",number));
                 List<String> Rids = new ArrayList<String>();
@@ -47,7 +50,7 @@ public class CommandDB {
     public static String CreateProduct(String number) {
 
             OrientDB orient = new OrientDB("remote:localhost", OrientDBConfig.defaultConfig());
-            ODatabaseSession db = orient.open("test", "root", "user");
+            ODatabaseSession db = orient.open(databaseName, user, password);
             try {
                 OVertex user = db.newVertex("Product");
                 user.setProperty("number", number);
@@ -65,7 +68,7 @@ public class CommandDB {
     public static String DeleteProduct(String number) {
 
             OrientDB orient = new OrientDB("remote:localhost", OrientDBConfig.defaultConfig());
-            ODatabaseSession db = orient.open("test", "root", "user");
+            ODatabaseSession db = orient.open(databaseName, user, password);
             try {
                 db.command(String.format("DELETE VERTEX Product WHERE number = '%s'",number));
                 db.close();
@@ -83,7 +86,7 @@ public class CommandDB {
             to = NumberToRID(to);
 
             OrientDB orient = new OrientDB("remote:localhost", OrientDBConfig.defaultConfig());
-            ODatabaseSession db = orient.open("test", "root", "user");
+            ODatabaseSession db = orient.open(databaseName, user, password);
             try {
                 db.command(String.format("CREATE EDGE Recommendation FROM %s TO %s",from,to));
                 db.close();
@@ -102,7 +105,7 @@ public class CommandDB {
             to = NumberToRID(to);
 
             OrientDB orient = new OrientDB("remote:localhost", OrientDBConfig.defaultConfig());
-            ODatabaseSession db = orient.open("test", "root", "user");
+            ODatabaseSession db = orient.open(databaseName, user, password);
             try {
                 db.command(String.format("DELETE EDGE Recommendation FROM %s TO %s",from,to));
                 db.close();
@@ -116,7 +119,7 @@ public class CommandDB {
 
     public static String[] ShortestPath(String from, String to){
         OrientDB orient = new OrientDB("remote:localhost", OrientDBConfig.defaultConfig());
-        ODatabaseSession db = orient.open("test", "root", "user");
+        ODatabaseSession db = orient.open(databaseName, user, password);
         String fromQuery = String.format("Select From Product where number = '%s'",from);
         String toQuery = String.format("Select From Product where number = '%s'",to);
         OResultSet response = db.command(String.format("Select shortestPath((%s),(%s))",fromQuery,toQuery));
@@ -137,7 +140,7 @@ public class CommandDB {
     public static String CreateClass(String classname, String parentName){
 
             OrientDB orient = new OrientDB("remote:localhost", OrientDBConfig.defaultConfig());
-            ODatabaseSession db = orient.open("test", "root", "user");
+            ODatabaseSession db = orient.open(databaseName, user, password);
             try {
                 db.command(String.format("CREATE CLASS %s EXTENDS %s",classname,parentName));
                 db.close();
@@ -153,7 +156,7 @@ public class CommandDB {
 
     public static String[] OutRecommendation(String number){
         OrientDB orient = new OrientDB("remote:localhost", OrientDBConfig.defaultConfig());
-        ODatabaseSession db = orient.open("test", "root", "user");
+        ODatabaseSession db = orient.open(databaseName, user, password);
         OResultSet response = db.command(String.format("Select expand(out()) from Product where number = '%s'",number));
         ArrayList<String> recommendationList = new ArrayList<String>();
         String initialPath = "";

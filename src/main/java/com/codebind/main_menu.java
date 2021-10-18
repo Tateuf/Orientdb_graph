@@ -131,6 +131,8 @@ public class main_menu {
                         ResponsePath.setText(result);
                     }
                 }
+                OriginExplore.setText("");
+                DestinationExplore.setText("");
             }
         });
         RecommendationButton.addActionListener(new ActionListener() {
@@ -150,6 +152,7 @@ public class main_menu {
                         ResponseRecommendation.setText(result);
                     }
                 }
+                RecommendationSearch.setText("");
             }
         });
     }

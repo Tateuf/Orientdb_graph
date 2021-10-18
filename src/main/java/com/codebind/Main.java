@@ -15,6 +15,14 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        /*
+        //Create your classes Product and Recommendation before start to use the database
+        CommandDB.CreateClass("Product","V");
+        CommandDB.CreateClass("Recommendation","E");
+        */
+        /*
+        //Fonction to use our application
         main_menu.main(new String[]{});
+         */
     }
 }
